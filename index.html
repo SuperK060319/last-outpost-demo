@@ -16,13 +16,28 @@
         </div>
         <p>补给 · 火力 · 守线</p>
       </div>
-      <div id="game-container" aria-label="最后哨站游戏画面"></div>
+      <div id="game-container" aria-label="最后哨站游戏画面">
+        <div id="boot-status" role="status">正在装载前线数据…</div>
+      </div>
       <p class="hint">鼠标与触屏均可操作 · 建议开启声音</p>
     </main>
     <aside class="orientation-notice" role="status" aria-live="polite">
       <strong>请旋转至竖屏</strong>
       <span>竖屏可以完整查看道路、基地与升级区域</span>
     </aside>
+    <script>
+      // 模块脚本或 Canvas 启动失败时，不再让手机用户只看到一块黑屏。
+      window.__showLastOutpostBootError = (detail) => {
+        const status = document.getElementById('boot-status');
+        if (!status) return;
+        status.classList.add('is-error');
+        status.innerHTML = '<strong>游戏启动失败</strong><span>请点击右上角，选择“在浏览器打开”，推荐最新版 Chrome、Edge 或手机系统浏览器。</span>';
+        if (detail) status.dataset.error = String(detail);
+      };
+      window.__lastOutpostBootTimer = window.setTimeout(() => {
+        window.__showLastOutpostBootError('boot-timeout');
+      }, 15000);
+    </script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
