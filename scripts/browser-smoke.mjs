@@ -15,10 +15,12 @@ const edge = spawn(EDGE_PATH, [
 const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
 async function findPage() {
+  const expectedUrl = decodeURI(BASE_URL).replace(/\/$/, '');
   for (let attempt = 0; attempt < 40; attempt += 1) {
     try {
       const targets = await fetch(`http://127.0.0.1:${DEBUG_PORT}/json`).then((response) => response.json());
-      const page = targets.find((target) => target.type === 'page' && !target.url.startsWith('devtools://'));
+      const page = targets.find((target) => target.type === 'page'
+        && decodeURI(target.url).replace(/\/$/, '') === expectedUrl);
       if (page) return page;
     } catch { /* Edge仍在启动，继续短轮询。 */ }
     await wait(150);
@@ -64,12 +66,15 @@ async function run() {
   await command('Page.reload', { ignoreCache: true });
 
   let bootState = null;
-  for (let attempt = 0; attempt < 30; attempt += 1) {
+  for (let attempt = 0; attempt < 150; attempt += 1) {
     await wait(100);
     bootState = await evaluate(`window.game ? ({ scene: window.game.scene.getScenes(true)[0]?.scene.key, width: document.querySelector('canvas')?.clientWidth, height: document.querySelector('canvas')?.clientHeight }) : null`);
     if (bootState?.scene === 'MenuScene') break;
   }
-  if (bootState?.scene !== 'MenuScene') throw new Error(`启动场景异常：${bootState?.scene}`);
+  if (bootState?.scene !== 'MenuScene') {
+    const bootDiagnostic = await evaluate(`(() => { const status = document.getElementById('boot-status'); return { text: status?.innerText, error: status?.dataset.error }; })()`);
+    throw new Error(`启动场景异常：${bootState?.scene}；页面=${JSON.stringify(bootDiagnostic)}；运行错误=${runtimeErrors.join(' | ')}`);
+  }
 
   await evaluate(`window.game.scene.start('GameScene'); true`);
   await wait(500);
