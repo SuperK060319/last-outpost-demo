@@ -1,0 +1,130 @@
+:root {
+  color-scheme: dark;
+  font-family: "Bahnschrift", "Microsoft YaHei", sans-serif;
+  background: #101618;
+  color: #e9e3d5;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+}
+
+* { box-sizing: border-box; }
+
+html, body { width: 100%; min-height: 100%; margin: 0; overscroll-behavior: none; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 50% -12%, rgba(139, 106, 70, 0.28), transparent 42%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.01) 0 1px, transparent 1px 9px),
+    #101618;
+}
+
+.game-shell {
+  /* 桌面宽度同时受可用高度约束，修复 851px 以上窗口仍纵向溢出的断点空档。 */
+  width: min(100%, 520px, calc((100vh - 92px) * 0.5625 + 28px));
+  width: min(100%, 520px, calc((100svh - 92px) * 0.5625 + 28px));
+  padding: 16px 14px 22px;
+}
+
+.title-row {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 4px 10px;
+}
+
+.eyebrow {
+  margin: 0 0 3px;
+  color: #b89a6a;
+  font: 700 9px/1.1 "Bahnschrift Condensed", "Arial Narrow", sans-serif;
+  letter-spacing: .22em;
+}
+
+h1 {
+  margin: 0;
+  font: 900 27px/1 "Bahnschrift Condensed", "Arial Narrow", "Microsoft YaHei", sans-serif;
+  letter-spacing: .04em;
+}
+
+.title-row > p { margin: 0 0 2px; color: #8f9697; font-size: 11px; }
+
+#game-container {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 2px solid rgba(184, 154, 106, .42);
+  border-radius: 6px;
+  background: #111719;
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, .62),
+    0 0 0 5px rgba(34, 41, 42, .9),
+    inset 0 0 0 1px rgba(255,255,255,.035);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+#game-container canvas { display: block; width: 100% !important; height: 100% !important; }
+.hint { margin: 10px 0 0; color: #6f7474; font-size: 10px; text-align: center; letter-spacing: .08em; }
+
+.orientation-notice {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  place-content: center;
+  gap: 10px;
+  padding: calc(24px + var(--safe-top)) calc(24px + var(--safe-right)) calc(24px + var(--safe-bottom)) calc(24px + var(--safe-left));
+  color: #e9e3d5;
+  text-align: center;
+  background: #171c1f;
+}
+
+.orientation-notice strong { font-size: 24px; color: #d7aa70; }
+.orientation-notice span { max-width: 320px; color: #9ba19e; font-size: 13px; line-height: 1.6; }
+
+@media (max-height: 850px) and (min-width: 520px) {
+  .game-shell { width: min(430px, calc(100svh * 0.5625)); padding: 0; }
+  .title-row { display: none; }
+  .hint { display: none; }
+}
+
+@media (max-width: 520px) {
+  body {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
+    background: #171c1f;
+  }
+  .game-shell {
+    /* 刘海和底部手势条从可用尺寸中扣除，画布仍保持完整 9:16。 */
+    width: min(
+      calc(100vw - var(--safe-left) - var(--safe-right)),
+      calc((100vh - var(--safe-top) - var(--safe-bottom)) * 0.5625)
+    );
+    width: min(
+      calc(100vw - var(--safe-left) - var(--safe-right)),
+      calc((100svh - var(--safe-top) - var(--safe-bottom)) * 0.5625)
+    );
+    padding: 0;
+  }
+  .title-row, .hint { display: none; }
+  #game-container { width: 100%; min-height: 0; aspect-ratio: 9 / 16; border: 0; border-radius: 0; }
+}
+
+/* 手机横屏下完整战场会缩到不可读，明确引导回竖屏而非展示失真的小画布。 */
+@media (orientation: landscape) and (max-height: 520px) and (pointer: coarse) {
+  .game-shell { visibility: hidden; }
+  .orientation-notice { display: grid; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
