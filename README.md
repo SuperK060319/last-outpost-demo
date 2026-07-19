@@ -2,6 +2,12 @@
 
 竖屏单线自动塔防原型。现代军事基地使用六种自动炮塔抵御多类型感染体，面向鼠标和手机触控操作。
 
+## 在线试玩
+
+[点击进入 LAST OUTPOST](https://superk060319.github.io/last-outpost-demo/)
+
+首次加载需要下载游戏素材，建议等待加载完成后再开始操作。手机请使用竖屏。
+
 ## 当前可玩闭环
 
 1. 三种前线据点特性。
@@ -34,6 +40,8 @@ npm run build
 - 正式战场、角色与设施素材：`public/assets/last-outpost-v2/`
 - 六种炮塔的图片安装锚点：`src/game/config/towers.js` 中的 `mountOrigin`
 - 素材加载失败时的程序回退纹理：`src/utils/createTextures.js`
+- GitHub Pages 自动部署：`.github/workflows/deploy-pages.yml`
+- 部署路径设置：`vite.config.js` 中的 `base`
 
 敌人阶段切换、敌人数组清理、结算与存档属于核心逻辑。调整布局时优先修改 `layout.js`，不要在场景内重新散落坐标。
 
