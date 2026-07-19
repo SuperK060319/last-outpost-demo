@@ -2,7 +2,7 @@ import { spawn } from 'node:child_process';
 
 const EDGE_PATH = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
 const DEBUG_PORT = 9333;
-const BASE_URL = 'http://127.0.0.1:4178/';
+const BASE_URL = process.env.SMOKE_URL || 'http://127.0.0.1:4178/';
 
 const edge = spawn(EDGE_PATH, [
   '--headless=new',
@@ -18,7 +18,7 @@ async function findPage() {
   for (let attempt = 0; attempt < 40; attempt += 1) {
     try {
       const targets = await fetch(`http://127.0.0.1:${DEBUG_PORT}/json`).then((response) => response.json());
-      const page = targets.find((target) => target.type === 'page' && target.url.includes('127.0.0.1:4178'));
+      const page = targets.find((target) => target.type === 'page' && !target.url.startsWith('devtools://'));
       if (page) return page;
     } catch { /* Edge仍在启动，继续短轮询。 */ }
     await wait(150);
@@ -97,13 +97,13 @@ async function run() {
       weaponSlotCount: weaponPanels.length,
       runtimeCount: scene.weaponRuntime.length,
       twoRows: new Set(weaponPanels.map((panel) => panel.panel.y)).size === 2,
-      padsVisible: weaponPanels.every((panel) => panel.pad?.slab?.active && panel.pad?.shadow?.visible),
+      padsVisible: weaponPanels.every((panel) => panel.pad?.mount?.active && panel.pad?.shadow?.visible),
       allSlotMenus,
     };
   })()`);
   if (!towerMenu.textures || !towerMenu.enemyTextures || !towerMenu.allNamesVisible || !towerMenu.continuousLabel
     || towerMenu.weaponSlotCount !== 4 || towerMenu.runtimeCount !== 4 || !towerMenu.twoRows || !towerMenu.padsVisible
-    || !towerMenu.allSlotMenus) throw new Error('六炮塔菜单、四炮位布局或持续补给标签未完整接入');
+    || !towerMenu.allSlotMenus) throw new Error(`六炮塔菜单、四炮位布局或持续补给标签未完整接入：${JSON.stringify(towerMenu)}`);
 
   const preparationBudget = await evaluate(`Number(window.game.scene.getScene('GameScene').leafText.text)`);
   await wait(5500);
@@ -234,7 +234,7 @@ async function run() {
     const afterBuild = Number(scene.leafText.text);
     scene.confirmTowerRemoval(0, false);
     const afterResale = Number(scene.leafText.text);
-    const resaleClearedSlot = scene.facilityPanels[0].label.text.includes('· 空');
+    const resaleClearedSlot = scene.facilityPanels[0].label.text.includes('空位');
 
     scene.startWave(); scene.waveElapsedMs = 1; scene.spawnFromQueue();
     const boss = scene.enemies.find((enemy) => enemy.boss);

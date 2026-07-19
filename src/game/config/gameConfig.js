@@ -10,7 +10,8 @@ export const GAME_HEIGHT = 960;
 
 export function createGameConfig() {
   return {
-    type: Phaser.AUTO,
+    // 低端 Android WebView 的 WebGL 驱动可能创建成功但只显示黑屏；2D Canvas 更稳定。
+    type: Phaser.CANVAS,
     parent: 'game-container',
     width: GAME_WIDTH,
     height: GAME_HEIGHT,

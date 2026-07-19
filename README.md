@@ -32,6 +32,14 @@ npm run dev
 npm run build
 ```
 
+生成可直接发送、无需服务器的单文件 HTML：
+
+```powershell
+npm run build:single
+```
+
+输出文件为 `release/最后哨站.html`。脚本、样式和正式美术都会内嵌进文件，接收方下载后可直接使用手机或电脑浏览器打开。
+
 ## 安全可改区
 
 - 数值、价格、波次：`src/game/config/balance.js`
@@ -42,6 +50,7 @@ npm run build
 - 素材加载失败时的程序回退纹理：`src/utils/createTextures.js`
 - GitHub Pages 自动部署：`.github/workflows/deploy-pages.yml`
 - 部署路径设置：`vite.config.js` 中的 `base`
+- 单文件 HTML 打包：`scripts/build-single-html.mjs`
 
 敌人阶段切换、敌人数组清理、结算与存档属于核心逻辑。调整布局时优先修改 `layout.js`，不要在场景内重新散落坐标。
 

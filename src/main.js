@@ -4,8 +4,14 @@ import { audioService } from './game/services/AudioService.js';
 import './styles.css';
 
 // 项目唯一入口。场景、数值和存档都由各自模块负责。
-const game = new Phaser.Game(createGameConfig());
-window.game = game;
+let game;
+try {
+  game = new Phaser.Game(createGameConfig());
+  window.game = game;
+} catch (error) {
+  window.__showLastOutpostBootError?.(error?.message ?? error);
+  throw error;
+}
 
 // 首次触摸、鼠标点击或键盘操作时解锁声音；成功后立即移除全局监听。
 const unlockEvents = ['pointerdown', 'touchstart', 'keydown'];
