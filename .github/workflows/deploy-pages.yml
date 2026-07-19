@@ -34,8 +34,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build game
-        run: npm run build
+      - name: Build single-file game
+        run: |
+          npm run build:single
+          cp "release/最后哨站.html" dist/index.html
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

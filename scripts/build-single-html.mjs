@@ -50,7 +50,9 @@ const safeStylesheet = stylesheet.replaceAll('</style', '<\\/style');
 const assetBootstrap = `<script>globalThis.__LAST_OUTPOST_ASSETS__=${JSON.stringify(imageMap)};<\/script>`;
 
 html = html.replace(styleTag[0], `<style>${safeStylesheet}</style>`);
-html = html.replace(scriptTag[0], `${assetBootstrap}<script type="module">${safeJavascript}</script>`);
+// 脚本放到 body 末尾，让慢速网络先显示加载提示，而不是下载 7 MB 时一直黑屏。
+html = html.replace(scriptTag[0], '');
+html = html.replace('</body>', `${assetBootstrap}<script type="module">${safeJavascript}</script></body>`);
 
 if (faviconTag) {
   const favicon = await readFile(builtFile(faviconTag[1]), 'base64');
