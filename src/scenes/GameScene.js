@@ -175,13 +175,20 @@ export class GameScene extends Phaser.Scene {
     this.add.rectangle(270, 925, 540, 70, 0x111719, 1);
     this.add.rectangle(270, 891, 540, 2, PALETTE.orange, 0.72);
     this.add.rectangle(4, 925, 8, 70, PALETTE.orange, 0.88);
-    this.messageText = this.add.text(24, 907, '点击基地设施进行建造或升级', {
-      fontFamily: FONT_BODY, fontSize: '11px', color: '#8f9693', wordWrap: { width: 218 },
+    // 手机会把 540px 画布继续缩小，因此底栏主提示必须保持较大的中文正文和高对比度。
+    this.messageText = this.add.text(24, 914, '点击基地设施进行建造或升级', {
+      fontFamily: FONT_BODY, fontSize: '14px', color: '#e7e2d8', fontStyle: 'bold',
+      lineSpacing: 2, wordWrap: { width: 205 },
     }).setOrigin(0, 0.5);
-    this.add.rectangle(246, 925, 2, 48, PALETTE.sand, 0.28);
-    this.spellButtons = SPELL_ORDER.map((type, index) => this.createSpellButton(type, 282 + index * 68));
-    this.pauseButton = addButton(this, 466, 925, 112, 44, '暂停 / PAUSE', () => this.togglePause(), { fill: 0x303638, stroke: 0x777f7b, fontSize: '12px' });
-    this.add.text(24, 936, 'AUTO DEFENSE ONLINE', { fontFamily: 'Arial Narrow, Arial', fontSize: '10px', color: '#c67c3a', letterSpacing: 2 });
+    this.add.circle(29, 942, 3, PALETTE.orange, 1);
+    this.add.text(38, 942, '自动防御运行中', {
+      fontFamily: FONT_BODY, fontSize: '11px', color: '#e0a05a', fontStyle: 'bold',
+    }).setOrigin(0, 0.5);
+    this.add.rectangle(240, 925, 2, 50, PALETTE.sand, 0.34);
+    this.spellButtons = SPELL_ORDER.map((type, index) => this.createSpellButton(type, 277 + index * 68));
+    this.pauseButton = addButton(this, 462, 925, 108, 50, '暂停', () => this.togglePause(), {
+      fill: 0x303638, stroke: 0x8f9994, fontSize: '16px', fontFamily: FONT_BODY,
+    });
 
     this.input.on('pointermove', (pointer) => this.moveSpellReticle(pointer.worldX, pointer.worldY));
     this.input.on('pointerup', (pointer) => this.tryCastSelectedSpell(pointer.worldX, pointer.worldY));
@@ -197,14 +204,14 @@ export class GameScene extends Phaser.Scene {
 
   createSpellButton(type, x) {
     const spell = SPELLS[type];
-    const panel = this.add.rectangle(x, 925, 62, 46, spell.fill, 0.96)
+    const panel = this.add.rectangle(x, 925, 62, 52, spell.fill, 0.96)
       .setStrokeStyle(1.5, spell.color, 0.78).setInteractive({ useHandCursor: true });
-    const stripe = this.add.rectangle(x, 903, 62, 3, spell.color, 0.95);
-    const code = this.add.text(x, 909, spell.code, {
-      fontFamily: 'Bahnschrift Condensed, Arial Narrow, Arial', fontSize: '8px', color: '#c8d0cc', fontStyle: 'bold', letterSpacing: 1,
+    const stripe = this.add.rectangle(x, 900, 62, 4, spell.color, 0.95);
+    const code = this.add.text(x, 907, spell.code, {
+      fontFamily: 'Bahnschrift Condensed, Arial Narrow, Arial', fontSize: '10px', color: '#eef2ef', fontStyle: 'bold', letterSpacing: 1,
     }).setOrigin(0.5);
-    const text = this.add.text(x, 930, '', {
-      fontFamily: 'Bahnschrift Condensed, Microsoft YaHei', fontSize: '9px', color: '#f1eadc',
+    const text = this.add.text(x, 931, '', {
+      fontFamily: 'Bahnschrift Condensed, Microsoft YaHei', fontSize: '11px', color: '#f1eadc',
       fontStyle: 'bold', align: 'center', lineSpacing: 1,
     }).setOrigin(0.5);
     panel.on('pointerdown', () => this.tweens.add({ targets: [panel, text], scale: 0.96, duration: 55, yoyo: true }));
@@ -1462,7 +1469,7 @@ export class GameScene extends Phaser.Scene {
       if (!this.messageText.active) return;
       const selected = this.selectedSpell ? SPELLS[this.selectedSpell] : null;
       this.messageText.setText(selected ? `${selected.name}待命 · 点击道路投放` : '点击基地设施进行建造或升级')
-        .setColor(selected ? '#e9e3d5' : '#8f9693');
+        .setColor(selected ? '#ffffff' : '#e7e2d8');
     });
   }
 
