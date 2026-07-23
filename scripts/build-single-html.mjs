@@ -6,7 +6,9 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 const distDir = path.join(projectRoot, 'dist');
 const imageDir = path.join(projectRoot, 'public', 'assets', 'last-outpost-v2');
 const releaseDir = path.join(projectRoot, 'release');
-const outputFile = path.join(releaseDir, '最后哨站.html');
+const outputFile = path.join(releaseDir, '零号防线.html');
+// 旧文件名只作为 GitHub Pages 工作流兼容入口，玩家看到的品牌仍是“零号防线”。
+const legacyOutputFile = path.join(releaseDir, '最后哨站.html');
 
 const mimeTypes = {
   '.jpg': 'image/jpeg',
@@ -60,7 +62,10 @@ if (faviconTag) {
 }
 
 await mkdir(releaseDir, { recursive: true });
-await writeFile(outputFile, html);
+await Promise.all([
+  writeFile(outputFile, html),
+  writeFile(legacyOutputFile, html),
+]);
 
 const sizeMb = (Buffer.byteLength(html) / 1024 / 1024).toFixed(2);
 console.log(`单文件版本已生成：${outputFile} (${sizeMb} MB)`);

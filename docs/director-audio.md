@@ -1,4 +1,4 @@
-# LAST OUTPOST 音效API
+# LINE ZERO 音效API
 
 ## 声音层级
 

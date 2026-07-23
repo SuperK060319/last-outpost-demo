@@ -76,6 +76,19 @@ async function run() {
     throw new Error(`启动场景异常：${bootState?.scene}；页面=${JSON.stringify(bootDiagnostic)}；运行错误=${runtimeErrors.join(' | ')}`);
   }
 
+  const brandState = await evaluate(`(() => {
+    const menu = window.game.scene.getScene('MenuScene');
+    const menuTexts = menu.children.list.filter((object) => typeof object.text === 'string').map((object) => object.text);
+    return {
+      pageTitle: document.title,
+      hasEnglishName: menuTexts.includes('LINE ZERO'),
+      hasChineseName: menuTexts.includes('零号防线'),
+      hasLegacyName: menuTexts.some((text) => text.includes('LAST OUTPOST') || text.includes('最后哨站')),
+    };
+  })()`);
+  if (brandState.pageTitle !== 'LINE ZERO / 零号防线' || !brandState.hasEnglishName
+    || !brandState.hasChineseName || brandState.hasLegacyName) throw new Error(`品牌名称未完整统一：${JSON.stringify(brandState)}`);
+
   await evaluate(`window.game.scene.start('GameScene'); true`);
   await wait(500);
 
@@ -255,12 +268,12 @@ async function run() {
   if (runtimeErrors.length) throw new Error(`浏览器运行错误：${runtimeErrors.join(' | ')}`);
 
   socket.close();
-  return { bootState, towerMenu, preparationBudget, preparationBudgetAfterWait, progressionState, spellState, earlyClearPhase, waveTwo, runnerTypes, pausedAt, pausedAfter, mixedTypes, behaviorState, lateGameState };
+  return { bootState, brandState, towerMenu, preparationBudget, preparationBudgetAfterWait, progressionState, spellState, earlyClearPhase, waveTwo, runnerTypes, pausedAt, pausedAfter, mixedTypes, behaviorState, lateGameState };
 }
 
 try {
   const result = await run();
-  console.log('LAST OUTPOST · 浏览器冒烟测试通过');
+  console.log('LINE ZERO · 浏览器冒烟测试通过');
   console.log(JSON.stringify(result, null, 2));
 } finally {
   edge.kill();

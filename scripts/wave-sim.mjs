@@ -174,7 +174,7 @@ function simulateCombat(waveNumber, towerTypes, travelFn = enemyTravelSeconds) {
   return { kills, total: units.length, doorHp: Math.round(doorHp), finishSeconds: finishAtMs / 1000 };
 }
 
-console.log('LAST OUTPOST · 实时难度与旅行时间检查');
+console.log('LINE ZERO · 实时难度与旅行时间检查');
 console.log('波次 | 名额/实敌 | 抵达窗口 | 同屏峰值 | 3秒抵达峰值 | 总压力 | 时限余量');
 
 let totalEnemies = 0;

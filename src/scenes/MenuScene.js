@@ -10,15 +10,15 @@ export class MenuScene extends Phaser.Scene {
   create() {
     this.cameras.main.setBackgroundColor('#171c1f');
     this.drawBackdrop();
-    this.add.text(270, 112, 'LAST OUTPOST', { fontFamily: FONT_DISPLAY, fontSize: '52px', color: '#f0eadc', fontStyle: 'bold', letterSpacing: 3 }).setOrigin(0.5);
-    this.add.text(270, 163, '最后哨站', { fontFamily: FONT_BODY, fontSize: '18px', color: '#d7aa70', fontStyle: 'bold', letterSpacing: 2 }).setOrigin(0.5);
-    this.add.text(270, 198, 'FIELD DEFENSE COMMAND  //  05 WAVES', { fontFamily: FONT_DISPLAY, fontSize: '11px', color: '#8f9995', letterSpacing: 2 }).setOrigin(0.5);
+    this.add.text(270, 112, 'LINE ZERO', { fontFamily: FONT_DISPLAY, fontSize: '52px', color: '#f0eadc', fontStyle: 'bold', letterSpacing: 4 }).setOrigin(0.5);
+    this.add.text(270, 163, '零号防线', { fontFamily: FONT_BODY, fontSize: '18px', color: '#d7aa70', fontStyle: 'bold', letterSpacing: 2 }).setOrigin(0.5);
+    this.add.text(270, 198, 'DEFENSE LINE ZERO  //  05 WAVES', { fontFamily: FONT_DISPLAY, fontSize: '11px', color: '#8f9995', letterSpacing: 2 }).setOrigin(0.5);
     this.add.text(270, 224, '自动火力已上线。守住最后一道闸门。', { fontFamily: FONT_BODY, fontSize: '12px', color: '#aab0ad' }).setOrigin(0.5);
 
     this.add.ellipse(270, 511, 244, 34, 0x000000, 0.42);
     const commander = this.add.image(270, 391, 'commander');
     commander.setScale(286 / commander.height);
-    this.add.text(270, 536, 'OUTPOST COMMAND // UNIT 07', { fontFamily: FONT_DISPLAY, fontSize: '10px', color: '#8a918e', letterSpacing: 3 }).setOrigin(0.5);
+    this.add.text(270, 536, 'LINE ZERO COMMAND // UNIT 07', { fontFamily: FONT_DISPLAY, fontSize: '10px', color: '#8a918e', letterSpacing: 3 }).setOrigin(0.5);
 
     const stats = `最高波次 ${gameStore.profile.bestWave}    ·    勋章 ${gameStore.profile.jade}`;
     this.add.text(270, 575, stats, { fontFamily: FONT_BODY, fontSize: '14px', color: '#d7c19a', fontStyle: 'bold' }).setOrigin(0.5);

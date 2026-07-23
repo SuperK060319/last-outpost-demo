@@ -1,10 +1,10 @@
-# LAST OUTPOST / 最后哨站 Demo
+# LINE ZERO / 零号防线 Demo
 
 竖屏单线自动塔防原型。现代军事基地使用六种自动炮塔抵御多类型感染体，面向鼠标和手机触控操作。
 
 ## 在线试玩
 
-[点击进入 LAST OUTPOST](https://superk060319.github.io/last-outpost-demo/)
+[点击进入《零号防线》](https://superk060319.github.io/last-outpost-demo/)
 
 线上首页使用单文件版本，不再额外请求游戏脚本或美术素材。首次加载约 7 MB，请等待装载完成后再开始操作；手机请使用竖屏。
 
@@ -38,7 +38,7 @@ npm run build
 npm run build:single
 ```
 
-输出文件为 `release/最后哨站.html`。脚本、样式和正式美术都会内嵌进文件，接收方下载后可直接使用手机或电脑浏览器打开。
+输出文件为 `release/零号防线.html`。脚本、样式和正式美术都会内嵌进文件，接收方下载后可直接使用手机或电脑浏览器打开。
 
 ## 安全可改区
 

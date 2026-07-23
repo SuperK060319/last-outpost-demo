@@ -1,4 +1,4 @@
-# LAST OUTPOST 技术兼容说明
+# LINE ZERO 技术兼容说明
 
 ## 本轮边界
 

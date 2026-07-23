@@ -51,7 +51,7 @@ function specializationScenario(type) {
   return {};
 }
 
-console.log('LAST OUTPOST · 六炮塔内容检查');
+console.log('LINE ZERO · 六炮塔内容检查');
 console.log(`升级成本：${TOWER_UPGRADE_COSTS.join(' / ')}，单线合计 ${UPGRADE_SUM}`);
 console.log('炮塔 | 建造 | 完整塔成本 | 基础DPS | 三条首级收益');
 

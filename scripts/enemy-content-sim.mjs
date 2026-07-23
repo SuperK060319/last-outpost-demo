@@ -15,7 +15,7 @@ const REQUIRED_FIELDS = [
   'silhouette', 'behavior', 'counterTower', 'counterHint', 'recommendedWave',
 ];
 
-console.log('LAST OUTPOST · 九类敌人内容检查');
+console.log('LINE ZERO · 九类敌人内容检查');
 console.log('敌人 | 建议波次 | 单体HP | 到门秒数 | 单次门伤 | 组奖励 | 行为');
 
 if (ENEMY_CATALOG_IDS.length !== 9) throw new Error(`敌人总类型应为9，当前为${ENEMY_CATALOG_IDS.length}`);

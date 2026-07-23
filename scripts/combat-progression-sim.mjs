@@ -45,7 +45,7 @@ while (simulatedXp >= combatXpThreshold(simulatedLevel)) {
 assert.equal(runXp, 41);
 assert.equal(simulatedLevel, 5, '完整Demo应稳定触发5次战中选择');
 
-console.log('LAST OUTPOST · 战中成长检查通过');
+console.log('LINE ZERO · 战中成长检查通过');
 console.log('经验门槛：4 / 6 / 8 / 10 / 12；普通敌人 1 XP，特种敌人 2 XP。');
 console.log('三选一不重复，满级项自动移出候选，强化倍率可预测。');
 console.log(`五波共 ${runXp} XP，可稳定触发 ${simulatedLevel} 次三选一。`);

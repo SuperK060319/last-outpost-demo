@@ -113,7 +113,7 @@ const fullTowerCost = TOWERS.machineGun.buildCost + 3 * TOWER_UPGRADE_COSTS.redu
 const meaningfulMainTowerCost = TOWERS.machineGun.buildCost
   + 3 * TOWER_UPGRADE_COSTS.slice(0, 3).reduce((sum, cost) => sum + cost, 0);
 
-console.log('LAST OUTPOST · 首关数值检查');
+console.log('LINE ZERO · 首关数值检查');
 console.log(`开局补给 ${BALANCE.startingLeaves}；一级补给站持续 +${BALANCE.supplyPerSecond[1]}/秒、每波运输 +${BALANCE.bedIncome[1]}`);
 console.log(`机枪/迫击炮“建造+首级强化”成本 ${TOWERS.machineGun.buildCost + TOWER_UPGRADE_COSTS[0]}；狙击 ${TOWERS.sniper.buildCost + TOWER_UPGRADE_COSTS[0]}`);
 console.log(`完成开局建造后，第2波开始预算 ${waveTwoBudgetAfterOpening}（旧版约328）`);

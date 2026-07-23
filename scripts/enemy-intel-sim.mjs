@@ -14,7 +14,7 @@ function printIntel(label, intel) {
   console.log(`${label}: ${intel.variant} / ${intel.badge} / ${items}${intel.overflow ? ` / ${intel.overflow.label}` : ''}`);
 }
 
-console.log('LAST OUTPOST · 敌情预告view model检查');
+console.log('LINE ZERO · 敌情预告view model检查');
 
 const wave1 = buildEnemyIntel(previewFor(1), catalogs);
 printIntel('W1', wave1);
